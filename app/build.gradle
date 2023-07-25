@@ -2,11 +2,18 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
     namespace 'com.neotica.paging3demo'
     compileSdk 33
+
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "")
+        }
+    }
 
     defaultConfig {
         applicationId "com.neotica.paging3demo"
@@ -25,11 +32,11 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = "17"
-        sourceCompatibility = "17"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '17' // Change this to Java 8 (1.8)
     }
     buildFeatures {
         viewBinding true
@@ -58,4 +65,5 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
     implementation "androidx.paging:paging-runtime-ktx:3.1.0"
+    implementation 'androidx.room:room-paging:2.4.0-rc01'
 }

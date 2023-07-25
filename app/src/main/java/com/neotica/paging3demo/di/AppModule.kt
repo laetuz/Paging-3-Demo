@@ -1,6 +1,5 @@
 package com.neotica.paging3demo.di
 
-import android.content.Context
 import androidx.room.Room
 import com.neotica.paging3demo.data.QuoteRepo
 import com.neotica.paging3demo.data.database.QuoteDatabase
@@ -38,14 +37,6 @@ val viewModule = module {
 }
 
 val databaseModule = module {
-    single { provideDatabase(androidContext()) }
-}
-
-private fun provideDatabase(context: Context): QuoteDatabase {
-    return Room.databaseBuilder(
-        context.applicationContext,
-        QuoteDatabase::class.java, "quote_database"
-    )
-        .fallbackToDestructiveMigration()
-        .build()
+    factory { get<QuoteDatabase>().quoteDao() }
+    single { Room.databaseBuilder(androidContext(), QuoteDatabase::class.java, "quote_database").fallbackToDestructiveMigration().build() }
 }
